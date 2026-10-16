@@ -3,6 +3,7 @@ import initialPlants from "./data/plants";
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
 import SearchBar from "./components/SearchBar";
+import AddPlantForm from "./components/AddPlantForm";
 import PlantList from "./components/PlantList";
 import Footer from "./components/Footer";
 
@@ -12,6 +13,7 @@ export default function App() {
   );
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
+  const [showForm, setShowForm] = useState(false);
 
   const categories = ["All", "Indoor", "Succulent", "Outdoor", "Herb"];
 
@@ -30,6 +32,16 @@ export default function App() {
 
   const removePlant = (id) => setPlants(plants.filter((p) => p.id !== id));
 
+  const addPlant = (newPlant) => {
+    setPlants([...plants, { ...newPlant, id: Date.now(), favorite: false }]);
+    setShowForm(false);
+  };
+
+  const resetFilters = () => {
+    setSearchTerm("");
+    setCategory("All");
+  };
+
   return (
     <div className="app">
       <Header />
@@ -39,7 +51,21 @@ export default function App() {
         onSelect={setCategory}
       />
       <main>
-        <SearchBar value={searchTerm} onChange={setSearchTerm} />
+        <div className="toolbar">
+          <SearchBar value={searchTerm} onChange={setSearchTerm} />
+          <button onClick={resetFilters}>Reset filters</button>
+          <button onClick={() => setShowForm(!showForm)}>
+            {showForm ? "Cancel" : "+ Add plant"}
+          </button>
+        </div>
+
+        {showForm && (
+          <AddPlantForm
+            categories={categories.filter((c) => c !== "All")}
+            onAdd={addPlant}
+          />
+        )}
+
         <PlantList
           plants={visiblePlants}
           onToggleFavorite={toggleFavorite}
