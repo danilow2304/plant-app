@@ -1,5 +1,5 @@
 import { useState } from "react";
-import plants from "./data/plants";
+import initialPlants from "./data/plants";
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
 import SearchBar from "./components/SearchBar";
@@ -7,6 +7,9 @@ import PlantList from "./components/PlantList";
 import Footer from "./components/Footer";
 
 export default function App() {
+  const [plants, setPlants] = useState(
+    initialPlants.map((p) => ({ ...p, favorite: false }))
+  );
   const [searchTerm, setSearchTerm] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -20,6 +23,13 @@ export default function App() {
     return matchesSearch && matchesCategory;
   });
 
+  const toggleFavorite = (id) =>
+    setPlants(
+      plants.map((p) => (p.id === id ? { ...p, favorite: !p.favorite } : p))
+    );
+
+  const removePlant = (id) => setPlants(plants.filter((p) => p.id !== id));
+
   return (
     <div className="app">
       <Header />
@@ -30,7 +40,11 @@ export default function App() {
       />
       <main>
         <SearchBar value={searchTerm} onChange={setSearchTerm} />
-        <PlantList plants={visiblePlants} />
+        <PlantList
+          plants={visiblePlants}
+          onToggleFavorite={toggleFavorite}
+          onRemove={removePlant}
+        />
       </main>
       <Footer />
     </div>
