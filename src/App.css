@@ -1,133 +1,88 @@
-* {
-    box-sizing: border-box;
-}
-
 body {
-    margin: 0;
-    font-family: system-ui, sans-serif;
-    background: #f3f8f1;
-    color: #1f2d1f;
+  margin: 0;
+  background: #7fb77e;
+  color: black;
+  font-family: Georgia, serif;
 }
 
-.app {
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1rem;
+.site-header {
+  background: black;
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
 }
 
-header {
-    text-align: center;
-    padding: 1.5rem 0 0.5rem;
+.site-header h1 {
+  margin: 0;
 }
 
-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-bottom: 1rem;
+.filters {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  align-items: end;
+  max-width: 1100px;
+  margin: 1.5rem auto;
+  padding: 1rem;
+  background: #e8f5e3;
+  border: 2px solid #2f5d2f;
+  border-radius: 8px;
 }
 
-button {
-    padding: 0.5rem 0.9rem;
-    border: 1px solid #3b7a3b;
-    background: #fff;
-    color: #2b5e2b;
-    border-radius: 6px;
-    cursor: pointer;
-}
-
-button:hover {
-    background: #e3f1e3;
-}
-
-button.active {
-    background: #3b7a3b;
-    color: #fff;
-}
-
-.toolbar {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-}
-
-.toolbar input {
-    flex: 1;
-    min-width: 200px;
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
 input,
-select {
-    padding: 0.5rem;
-    border: 1px solid #aab;
-    border-radius: 6px;
+select,
+button {
+  font: inherit;
+  padding: 0.5rem;
 }
 
-.add-form {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0.5rem;
-    background: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-    margin-bottom: 1rem;
-}
-
-.error {
-    color: #b33;
-    grid-column: 1 / -1;
-    margin: 0;
+button {
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
 .plant-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.card {
-    background: #fff;
-    border-radius: 10px;
-    padding: 1rem;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+.plant-card {
+  background: #e8f5e3;
+  border: 2px solid #2f5d2f;
+  border-radius: 8px;
+  padding: 1rem;
 }
 
-.card.favorite {
-    border: 2px solid #e25573;
+.plant-card h2 {
+  margin: 0;
 }
 
-.card h3 {
-    margin: 0 0 0.4rem;
+.plant-card p {
+  margin: 0.25rem 0;
 }
 
-.card p {
-    margin: 0.3rem 0;
-    font-size: 0.9rem;
-}
-
-.tag {
-    background: #d6ead6;
-    padding: 0.1rem 0.5rem;
-    border-radius: 999px;
-    font-size: 0.75rem;
-}
-
-.card-buttons {
-    display: flex;
-    gap: 0.5rem;
-    margin-top: 0.7rem;
+.scientific {
+  font-style: italic;
 }
 
 .empty {
-    text-align: center;
-    padding: 2rem;
-    color: #666;
+  text-align: center;
+  font-size: 1.2rem;
 }
 
-footer {
-    text-align: center;
-    padding: 2rem 0;
-    color: #666;
+.site-footer {
+  text-align: center;
+  padding: 1rem;
 }

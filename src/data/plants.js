@@ -1,4 +1,3 @@
-// Each plant needs these fields for searching and filtering.
 const plants = [
   { id: 1, commonName: "Sunflower", scientificName: "Helianthus annuus", sunlight: "Full Sun", soil: "Well-Drained", bloomSeason: "Summer" },
   { id: 2, commonName: "Black-Eyed Susan", scientificName: "Rudbeckia hirta", sunlight: "Full Sun", soil: "Loamy", bloomSeason: "Summer" },
