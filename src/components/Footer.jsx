@@ -1,7 +1,9 @@
-export default function Footer() {
+function Footer() {
   return (
-    <footer>
-      <p>{new Date().getFullYear()} Plant Collection</p>
+    <footer className="site-footer">
+      <p>Plant Directory &copy; {new Date().getFullYear()}</p>
     </footer>
   );
 }
+
+export default Footer;

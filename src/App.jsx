@@ -1,78 +1,72 @@
 import { useState } from "react";
-import initialPlants from "./data/plants";
+import plants from "./data/plants";
 import Header from "./components/Header";
 import Navigation from "./components/Navigation";
-import SearchBar from "./components/SearchBar";
-import AddPlantForm from "./components/AddPlantForm";
 import PlantList from "./components/PlantList";
 import Footer from "./components/Footer";
+import "./App.css";
 
-export default function App() {
-  const [plants, setPlants] = useState(
-    initialPlants.map((p) => ({ ...p, favorite: false }))
-  );
-  const [searchTerm, setSearchTerm] = useState("");
-  const [category, setCategory] = useState("All");
-  const [showForm, setShowForm] = useState(false);
+// Starting values for every filter. Reset simply restores this object.
+const emptyFilters = {
+  commonName: "",
+  scientificName: "",
+  sunlight: "",
+  soil: "",
+  bloomSeason: "",
+};
 
-  const categories = ["All", "Indoor", "Succulent", "Outdoor", "Herb"];
+function App() {
+  // useState: one object holds the current value of every search/filter control.
+  const [filters, setFilters] = useState(emptyFilters);
 
-  const visiblePlants = plants.filter((p) => {
-    const matchesSearch = p.name
+  // Event handler passed down to Navigation. Navigation calls it with
+  // the field name and new value whenever the user changes a control.
+  const handleFilterChange = (field, value) => {
+    setFilters((prev) => ({ ...prev, [field]: value }));
+  };
+
+  // Event handler for the Reset button.
+  const handleReset = () => setFilters(emptyFilters);
+
+  // Array filtering: keep a plant only if it passes every active filter.
+  const visiblePlants = plants.filter((plant) => {
+    const matchesCommon = plant.commonName
       .toLowerCase()
-      .includes(searchTerm.trim().toLowerCase());
-    const matchesCategory = category === "All" || p.category === category;
-    return matchesSearch && matchesCategory;
+      .includes(filters.commonName.trim().toLowerCase());
+    const matchesScientific = plant.scientificName
+      .toLowerCase()
+      .includes(filters.scientificName.trim().toLowerCase());
+    const matchesSunlight = !filters.sunlight || plant.sunlight === filters.sunlight;
+    const matchesSoil = !filters.soil || plant.soil === filters.soil;
+    const matchesBloom = !filters.bloomSeason || plant.bloomSeason === filters.bloomSeason;
+
+    return (
+      matchesCommon &&
+      matchesScientific &&
+      matchesSunlight &&
+      matchesSoil &&
+      matchesBloom
+    );
   });
 
-  const toggleFavorite = (id) =>
-    setPlants(
-      plants.map((p) => (p.id === id ? { ...p, favorite: !p.favorite } : p))
-    );
-
-  const removePlant = (id) => setPlants(plants.filter((p) => p.id !== id));
-
-  const addPlant = (newPlant) => {
-    setPlants([...plants, { ...newPlant, id: Date.now(), favorite: false }]);
-    setShowForm(false);
-  };
-
-  const resetFilters = () => {
-    setSearchTerm("");
-    setCategory("All");
-  };
+  // True when at least one control differs from its starting value.
+  const hasActiveFilters = Object.values(filters).some((value) => value !== "");
 
   return (
     <div className="app">
       <Header />
       <Navigation
-        categories={categories}
-        selected={category}
-        onSelect={setCategory}
+        filters={filters}
+        onFilterChange={handleFilterChange}
+        onReset={handleReset}
+        hasActiveFilters={hasActiveFilters}
+        resultCount={visiblePlants.length}
+        totalCount={plants.length}
       />
-      <main>
-        <div className="toolbar">
-          <SearchBar value={searchTerm} onChange={setSearchTerm} />
-          <button onClick={resetFilters}>Reset filters</button>
-          <button onClick={() => setShowForm(!showForm)}>
-            {showForm ? "Cancel" : "+ Add plant"}
-          </button>
-        </div>
-
-        {showForm && (
-          <AddPlantForm
-            categories={categories.filter((c) => c !== "All")}
-            onAdd={addPlant}
-          />
-        )}
-
-        <PlantList
-          plants={visiblePlants}
-          onToggleFavorite={toggleFavorite}
-          onRemove={removePlant}
-        />
-      </main>
+      <PlantList plants={visiblePlants} onReset={handleReset} />
       <Footer />
     </div>
   );
 }
+
+export default App;

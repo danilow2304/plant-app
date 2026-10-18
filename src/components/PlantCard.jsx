@@ -1,21 +1,18 @@
-export default function PlantCard({ plant, onToggleFavorite, onRemove }) {
-  const { id, name, category, light, water, description, favorite } = plant;
-
+function PlantCard({ commonName, scientificName, sunlight, soil, bloomSeason }) {
   return (
-    <article className={`card ${favorite ? "favorite" : ""}`}>
-      <h3>
-        {name} {favorite && <span title="Favorite">♥</span>}
-      </h3>
-      <span className="tag">{category}</span>
-      <p>{description}</p>
-      <p><strong>Light:</strong> {light}</p>
-      <p><strong>Water:</strong> {water}</p>
-      <div className="card-buttons">
-        <button onClick={() => onToggleFavorite(id)}>
-          {favorite ? "Unfavorite" : "Favorite"}
-        </button>
-        <button onClick={() => onRemove(id)}>Remove</button>
-      </div>
+    <article className="plant-card">
+      <h2>{commonName}</h2>
+      <p className="scientific">{scientificName}</p>
+      <dl>
+        <dt>Sunlight</dt>
+        <dd>{sunlight}</dd>
+        <dt>Soil</dt>
+        <dd>{soil}</dd>
+        <dt>Blooms</dt>
+        <dd>{bloomSeason}</dd>
+      </dl>
     </article>
   );
 }
+
+export default PlantCard;

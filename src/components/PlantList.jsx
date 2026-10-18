@@ -1,20 +1,32 @@
 import PlantCard from "./PlantCard";
 
-export default function PlantList({ plants, onToggleFavorite, onRemove }) {
+function PlantList({ plants, onReset }) {
+  // Conditional rendering: show a message instead of an empty grid.
   if (plants.length === 0) {
-    return <p className="empty">No plants match your search or filters.</p>;
+    return (
+      <main className="plant-list empty">
+        <p>No plants match your search.</p>
+        <button type="button" onClick={onReset}>
+          Clear filters and show all plants
+        </button>
+      </main>
+    );
   }
 
   return (
-    <section className="plant-list">
+    <main className="plant-list">
       {plants.map((plant) => (
         <PlantCard
           key={plant.id}
-          plant={plant}
-          onToggleFavorite={onToggleFavorite}
-          onRemove={onRemove}
+          commonName={plant.commonName}
+          scientificName={plant.scientificName}
+          sunlight={plant.sunlight}
+          soil={plant.soil}
+          bloomSeason={plant.bloomSeason}
         />
       ))}
-    </section>
+    </main>
   );
 }
+
+export default PlantList;
