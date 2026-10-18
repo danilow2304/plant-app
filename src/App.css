@@ -67,14 +67,29 @@ button {
 
 .plant-card h2 {
   margin: 0;
-}
-
-.plant-card p {
-  margin: 0.25rem 0;
+  font-size: 1.3rem;
 }
 
 .scientific {
+  margin: 0.25rem 0 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid #2f5d2f;
   font-style: italic;
+}
+
+.plant-card dl {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 0.5rem;
+  margin: 0;
+}
+
+.plant-card dt {
+  font-weight: bold;
+}
+
+.plant-card dd {
+  margin: 0;
 }
 
 .empty {
